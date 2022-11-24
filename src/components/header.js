@@ -1,14 +1,20 @@
 import classes from './header.module.scss';
+import { useContext } from 'react';
+import movieContext from '../context/movie-context';
 
-function Header({ setSearchRes }) {
+function Header() {
 
-    const searchMovie =(e) => {
-        setSearchRes(e.target.value)
+    const header = useContext(movieContext)
+
+    const searchMovie = (e) => {
+        if (e.target.value.length > 2) {
+            header.setSearchRes(e.target.value)
+        }
     }
 
     return (
         <header className={classes.header}>
-            <input type='text' placeholder='Search for movies...' onChange={searchMovie} title='Search for movies...'/>
+            <input type='text' placeholder='Search for movies...' onChange={searchMovie} title='Search for movies...' />
         </header>
     )
 }

@@ -1,30 +1,36 @@
 import classes from './main.module.scss';
+import { useContext } from 'react';
+import movieContext from '../context/movie-context';
 
-function Main({ movie, searchRes }) {
+function Main() {
 
-    const movieArr = movie.map((item, i) => {
+    const main = useContext(movieContext)
+
+    const movieArr = main.movie.map((item, i) => {
         return (
-            <div 
-                key={i} 
-                className={classes.card} 
-                title={searchRes ? item.title : item.Title}
+            <div
+                key={i}
+                className={classes.card}
+                title={item.Title}
             >
                 <div className={classes.imgContainer}>
-                    <img 
-                        src={searchRes ? `https://image.tmdb.org/t/p/w300_and_h450_bestv2${item.poster_path}` : item.Poster} 
-                        alt='Not Found' 
-                    />
-                </div>
-                <div className={classes.title}>
-                    {searchRes ? item.title : item.Title}
+                    <img src={item.Poster} alt='Not Found' />
+                    <div className={classes.title}>
+                        {item.Title}
+                    </div>
                 </div>
             </div>
         )
     })
 
     return (
-        <main className={classes.main}>
-            {movie.length === 0 ? <div className={classes.notFound}>No movie found</div> : movieArr}
+        <main className={main.error ? classes.error : classes.main}>
+            {main.error ?
+                <div className={classes.notFound}>
+                    It's not you, its us! - {main.error} Please refresh.
+                </div>
+                : movieArr
+            }
         </main>
     )
 }

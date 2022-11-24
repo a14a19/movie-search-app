@@ -12,25 +12,33 @@ const Base_URL = 'https://www.omdbapi.com/?apikey=45f0782a&s=war'
 function App() {
   const [movie, setMovie] = useState([])
   const [searchRes, setSearchRes] = useState('');
-  
+  const [error, setError] = useState(null)
+
   useEffect(() => {
     if (searchRes) {
-      axios.get(`https://api.themoviedb.org/3/search/movie?query=${searchRes}&api_key=cfe422613b250f702980a3bbf9e90716`)
+      axios.get(`https://www.omdbapi.com/?apikey=45f0782a&s=${searchRes}`)
         .then(response => {
-          setMovie(response.data.results)
+          if (response.data.Response === 'True') {
+            setMovie(response.data.Search)
+          } else if (response.data.Response === 'False'){
+            setError(response.data.Error)
+          }
         })
+        .catch(err => setError(err.message))
     } else {
-      axios.get(Base_URL).then(response => {
-        setMovie(response.data.Search)
-      })
+      axios.get(Base_URL)
+        .then(response => {
+          setMovie(response.data.Search)
+        })
+        .catch(err => setError(err.message))
     }
   }, [searchRes])
 
   return (
-    <MovieContext.Provider value={{ movie, searchRes, setSearchRes }}>
+    <MovieContext.Provider value={{ movie, searchRes, setSearchRes, error }}>
       <div className={classes.app}>
-        <Header searchRes={searchRes} setSearchRes={setSearchRes} />
-        <Main movie={movie} searchRes={searchRes}/>
+        <Header />
+        <Main />
         <Footer />
       </div>
     </MovieContext.Provider>
@@ -39,4 +47,5 @@ function App() {
 
 export default App;
 
-// api = https://www.omdbapi.com/?apikey=45f0782a&s=war
+// api - https://www.omdbapi.com/?apikey=45f0782a&s=war
+// movieId api -  https://www.omdbapi.com/?i=tt0242423&apikey=45f0782a
