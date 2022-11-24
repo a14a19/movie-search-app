@@ -14,7 +14,7 @@ function Header() {
 
     return (
         <header className={classes.header}>
-            <input type='text' placeholder='Search for movies...' onChange={searchMovie} title='Search for movies...' />
+            <input type='text' placeholder='Search for movies...' onChange={searchMovie} title='Please enter min 3 character' />
         </header>
     )
 }
