@@ -46,6 +46,3 @@ function App() {
 }
 
 export default App;
-
-// api - https://www.omdbapi.com/?apikey=45f0782a&s=war
-// movieId api -  https://www.omdbapi.com/?i=tt0242423&apikey=45f0782a
