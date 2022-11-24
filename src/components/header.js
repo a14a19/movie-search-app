@@ -1,6 +1,6 @@
 import classes from './header.module.scss';
 
-function Header({ searchRes, setSearchRes }) {
+function Header({ setSearchRes }) {
 
     const searchMovie =(e) => {
         setSearchRes(e.target.value)
@@ -8,7 +8,7 @@ function Header({ searchRes, setSearchRes }) {
 
     return (
         <header className={classes.header}>
-            <input type='text' placeholder='Search for movies...' onChange={searchMovie}/>
+            <input type='text' placeholder='Search for movies...' onChange={searchMovie} title='Search for movies...'/>
         </header>
     )
 }
